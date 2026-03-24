@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .admin-wrapper {
+            width: 95%;
+            margin: 30px auto;
+            color: white;
+        }
+
+        .admin-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-title {
+            font-size: 42px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .admin-btn-group a {
+            display: inline-block;
+            margin-left: 10px;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #3b82f6, #7c3aed);
+            color: white;
+            font-weight: 600;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .summary-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .summary-card h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #cbd5e1;
+        }
+
+        .summary-card p {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+            color: #86efac;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: rgba(99,102,241,0.45);
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+        }
+
+        tr {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        td img {
+            width: 70px;
+            border-radius: 8px;
+        }
+
+        .visit-link {
+            color: #7dd3fc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <div class="admin-topbar">
+            <div class="admin-title">Admin Dashboard</div>
+            <div class="admin-btn-group">
+                <a href="/">Home</a>
+                <a href="/admin/search-history">Search History</a>
+                <a href="/admin/logout">Logout</a>
+            </div>
+        </div>
+
+        <div class="summary-cards">
+            <div class="summary-card">
+                <h3>Total Searches</h3>
+                <p>{{ total_searches }}</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Compared Products</h3>
+                <p>{{ total_compared }}</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Websites</h3>
+                <p>{{ total_websites }}</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Lowest Price Product</h3>
+                <p style="font-size:18px; color:#facc15;">
+                    {% if lowest_price_product %}
+                        {{ lowest_price_product.product_title }}<br>
+                        ₹{{ lowest_price_product.price }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="subtitle">All Compared Product Records</div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+    <th>ID</th>
+    <th>Search ID</th>
+    <th>Product</th>
+    <th>Website</th>
+    <th>Price</th>
+    <th>Image</th>
+    <th>Link</th>
+    <th>Fetched At</th>
+</tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                     <tr>
+    <td>{{ product.id }}</td>
+    <td>{{ product.search_id }}</td>
+    <td>{{ product.product_title }}</td>
+    <td>{{ product.website_name }}</td>
+    <td>₹{{ product.price }}</td>
+    <td>
+        {% if product.image_url %}
+            <img src="{{ product.image_url }}" alt="{{ product.product_title }}" width="60" style="border-radius:8px;">
+        {% else %}
+            No Image
+        {% endif %}
+    </td>
+    <td><a href="{{ product.product_link }}" target="_blank">Visit</a></td>
+    <td>{{ product.fetched_at }}</td>
+</tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

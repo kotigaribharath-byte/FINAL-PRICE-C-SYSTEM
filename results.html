@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <header class="navbar">
+        <div class="logo">Price<span>Compare</span></div>
+        <a href="/" class="admin-btn">New Search</a>
+    </header>
+
+    <main class="results-wrapper">
+        <div class="results-header">
+            <h1>Comparison Results</h1>
+            <p>Showing live results for <span>"{{ product_name }}"</span></p>
+        </div>
+
+        {% if results %}
+        <div class="product-grid">
+            {% for item in results %}
+            <div class="product-card {% if loop.index == 1 %}best-card{% endif %}">
+                 <img src="{{ item.image }}" alt="{{ item.title }}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+
+                <div class="product-info">
+                    <h3>{{ item.title }}</h3>
+                    <p class="website-name">{{ item.website }}</p>
+                    <p class="price-tag">₹{{ item.price }}</p>
+                    <p class="rating">⭐ {{ item.rating }} | {{ item.reviews }} reviews</p>
+
+                    {% if loop.index == 1 %}
+                    <div class="best-deal-badge">Best Price</div>
+                    {% endif %}
+
+                    <a href="{{ item.link }}" target="_blank" class="visit-btn">Visit Product</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+         {% else %}
+<div style="max-width:700px; margin:60px auto; text-align:center; background:rgba(255,255,255,0.08); padding:40px; border-radius:20px; color:white; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+    <h2 style="font-size:42px; margin-bottom:15px;">No Products Found</h2>
+    <p style="font-size:20px; color:#cbd5e1; margin-bottom:25px;">
+        Sorry bro, we couldn’t find matching products for
+        <span style="color:#93c5fd; font-weight:700;">"{{ product_name }}"</span>
+    </p>
+    <a href="/" style="display:inline-block; text-decoration:none; padding:14px 28px; border-radius:12px; background:linear-gradient(90deg, #3b82f6, #7c3aed); color:white; font-weight:700;">
+        Search Again
+    </a>
+</div>
+{% endif %}
+    </main>
+</body>
+</html>

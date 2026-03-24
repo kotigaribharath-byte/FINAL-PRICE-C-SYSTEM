@@ -1,0 +1,89 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Comparison System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <header class="navbar">
+        <div class="logo">Price<span>Compare</span></div>
+        <a href="/admin/login" class="admin-btn">Admin Login</a>
+    </header>
+
+    <main class="hero-section">
+        <div class="hero-left">
+            <span class="badge">Smart Shopping Assistant</span>
+            <h1>Compare Prices.<br>Save More.<br>Shop Smarter.</h1>
+            <p>
+                Search a product and compare live prices from multiple shopping websites
+                in one clean dashboard.
+            </p>
+
+            <form action="/search" method="POST" class="search-card">
+                <input type="text" name="product_name" placeholder="Search for mobiles, laptops, headphones..." required>
+                <button type="submit">Compare Now</button>
+            </form>
+
+            <div class="features">
+                <div class="feature-box">
+                    <h3>Live Search</h3>
+                    <p>Fetch product prices from different shopping sites.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Best Deal</h3>
+                    <p>Find the lowest price instantly and save money.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Simple UI</h3>
+                    <p>Easy to use interface for quick product comparison.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="preview-card">
+                <div class="preview-top">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+
+                <div class="preview-content">
+                    <h2>Comparison Preview</h2>
+
+                    <div class="preview-item best">
+                        <div>
+                            <h4>Flipkart</h4>
+                            <p>iPhone 15 128GB Blue</p>
+                        </div>
+                        <strong>₹68,499</strong>
+                    </div>
+
+                    <div class="preview-item">
+                        <div>
+                            <h4>Amazon</h4>
+                            <p>iPhone 15 128GB Blue</p>
+                        </div>
+                        <strong>₹69,999</strong>
+                    </div>
+
+                    <div class="preview-item">
+                        <div>
+                            <h4>Croma</h4>
+                            <p>iPhone 15 128GB Blue</p>
+                        </div>
+                        <strong>₹70,000</strong>
+                    </div>
+
+                    <div class="best-tag">Best Price Found</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
